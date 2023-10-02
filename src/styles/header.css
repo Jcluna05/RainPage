@@ -1,0 +1,62 @@
+.header {
+    background-color: #2A2754;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Alinea el logo y el menú en lados opuestos */
+    padding: 10px;
+  }
+  
+  .logo img {
+    height: 100px;
+  }
+  
+  .menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .menu li {
+    margin-left: 20px;
+  }
+  
+  .menu li:first-child {
+    margin-left: 0;
+  }
+  
+  .menu a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  
+  .menu a:hover {
+    background-color: white;
+  }
+  
+  /* Estilos para el menú desplegable */
+  .submenu {
+    position: absolute;
+    background-color: #2A2754;
+    border-radius: 5px;
+    padding: 10px;
+    display: none; /* Ocultar el menú desplegable inicialmente */
+  }
+  
+  .menu li:hover .submenu {
+    display: block; /* Mostrar el menú desplegable al pasar el cursor sobre "Eventos" */
+  }
+  
+  .submenu li {
+    margin: 5px 0;
+  }
+  
+  .submenu a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+  }
+  
