@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import Escena from "./Escena";
 
 function ThreeScene() {
@@ -16,10 +17,31 @@ function ThreeScene() {
     test.scene.receiveShadow = true; // Permite que la escena reciba sombras
     test.scene.castShadow = true; // Permite que la escena emita sombras
 
-    const al = new THREE.AmbientLight(0xe8d49b, 0.05);
-    test.scene.add(al);
+    //const al = new THREE.AmbientLight(0xe8d49b, 0.05);
+    //test.scene.add(al);
+
+    // ==================================================================================================================
+    const controls = new OrbitControls( test.camera, test.renderer.domElement );
+    controls.update();
+
+    controls.keys = {
+      LEFT: 'ArrowLeft', //left arrow
+      UP: 'ArrowUp', // up arrow
+      RIGHT: 'ArrowRight', // right arrow
+      BOTTOM: 'ArrowDown' // down arrow
+    }
+
+    controls.minDistance = 0; // Distancia mínima permitida norte (Revisar)
+    controls.maxDistance = 50; // Distancia máxima permitida sur
+
+    controls.minPolarAngle = Math.PI / 2; // Ángulo vertical mínimo
+    controls.maxPolarAngle = Math.PI / 2; // Ángulo vertical máximo (mismo que el mínimo para bloquear la rotación vertical)
+
+
+    // ==================================================================================================================
 
     let loadedModel;
+    let mixer;
     const glftLoader = new GLTFLoader();
     glftLoader.load("./assets/MapaEditado.glb", (gltfScene) => {
       loadedModel = gltfScene;
@@ -27,26 +49,34 @@ function ThreeScene() {
       
 
       /*gltfScene.scene.rotation.y = 10;*/
-      gltfScene.scene.rotation.x = 0;
+      gltfScene.scene.rotation.x = 0; // Rotacion en vertical 
+      gltfScene.scene.rotation.y = 0;
       gltfScene.scene.position.y = -5;
       gltfScene.scene.scale.set(5, 5, 5);
+
       test.scene.add(gltfScene.scene);
+      
+      // Lineas para poder importar las animaciones del modelo 3D
+      mixer = new THREE.AnimationMixer(loadedModel);
+      const clips = gltfScene.animations; // Se almacenan todas las animaciones
+      /*const clip = THREE.AnimationClip.findByName(clips , "RC_Anim"); // Se busca una animación en particular 
+      const action = mixer.clipAction(clip)
+      console.log(clips);
+      action.play();*/
+
+      console.log(clips);
+      clips.forEach(function(clip) {
+        const action = mixer.clipAction(clip);
+        action.play();
+      });
+
     });
 
-    const animate = () => {
-      if (loadedModel) {
-        loadedModel.scene.rotation.x += 0.01;
-        loadedModel.scene.rotation.y += 0.01;
-        loadedModel.scene.rotation.z += 0.01;
-      }
-      requestAnimationFrame(animate);
-    };
-    //animate();
 
     function handleKeyDown(event) {
       event.preventDefault(); // Evita el comportamiento predeterminado del desplazamiento de la página
 
-      const moveDistance = 0.5; // Distancia de movimiento de la cámara
+      const moveDistance = 0.1; // Distancia de movimiento de la cámara
       const rotateAngle = Math.PI / 16; // Ángulo de rotación de la cámara
 
       switch (event.key) {
@@ -79,7 +109,7 @@ function ThreeScene() {
       }
     }
 
-    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);//*/
     
     // Desde aqui comienzo a modificar ---------------------------------------------------------------------
 
@@ -119,13 +149,14 @@ function ThreeScene() {
     fullscreenButton.addEventListener("click", toggleFullscreen);
   }, []);
 
+  
+
   return (
     <div className="container">
       <div className="canvas-container">
-        <canvas id="myThreeJsCanvas" />
+        <canvas id="myThreeJsCanvas" className = "CanvasThree"/>
       </div>
     </div>
   );
 }
-
 export default ThreeScene;
