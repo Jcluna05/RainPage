@@ -1,0 +1,26 @@
+.eventos {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.eventos h1 {
+    color: #333;
+    font-size: 2em;
+}
+
+.evento {
+    background-color: #f8f9fa;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.evento h2 {
+    color: #333;
+    font-size: 1.5em;
+}
+
+.evento p {
+    color: #666;
+}

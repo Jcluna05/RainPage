@@ -1,0 +1,32 @@
+.contacto {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contacto h1 {
+    color: #333;
+    font-size: 2em;
+}
+
+.contacto form {
+    margin-top: 20px;
+}
+
+.contacto label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.contacto input, .contacto textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.contacto input[type="submit"] {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}

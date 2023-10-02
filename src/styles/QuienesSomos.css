@@ -1,0 +1,13 @@
+.quienes-somos {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .quienes-somos h1 {
+    color: #2A2754;
+  }
+  
+  .quienes-somos p {
+    color: #333;
+    line-height: 1.6;
+  }

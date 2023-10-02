@@ -1,0 +1,15 @@
+.convocatoria {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.convocatoria h1 {
+    color: #333;
+    font-size: 2em;
+}
+
+.convocatoria p {
+    color: #666;
+    line-height: 1.6;
+}
