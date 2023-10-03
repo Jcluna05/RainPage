@@ -17,9 +17,6 @@ function ThreeScene() {
     test.scene.receiveShadow = true; // Permite que la escena reciba sombras
     test.scene.castShadow = true; // Permite que la escena emita sombras
 
-    //const al = new THREE.AmbientLight(0xe8d49b, 0.05);
-    //test.scene.add(al);
-
     // ==================================================================================================================
     const controls = new OrbitControls( test.camera, test.renderer.domElement );
     controls.update();
@@ -43,34 +40,41 @@ function ThreeScene() {
     let loadedModel;
     let mixer;
     const glftLoader = new GLTFLoader();
-    glftLoader.load("./assets/MapaEditado.glb", (gltfScene) => {
-      loadedModel = gltfScene;
-      console.log(loadedModel);
-      
-
+    glftLoader.load("./assets/MapaFinal7.glb", (gltfScene) => {
+      loadedModel = gltfScene.scene;
+    
       /*gltfScene.scene.rotation.y = 10;*/
       gltfScene.scene.rotation.x = 0; // Rotacion en vertical 
       gltfScene.scene.rotation.y = 0;
       gltfScene.scene.position.y = -5;
       gltfScene.scene.scale.set(5, 5, 5);
 
-      test.scene.add(gltfScene.scene);
+      test.scene.add(loadedModel);
       
       // Lineas para poder importar las animaciones del modelo 3D
       mixer = new THREE.AnimationMixer(loadedModel);
       const clips = gltfScene.animations; // Se almacenan todas las animaciones
-      /*const clip = THREE.AnimationClip.findByName(clips , "RC_Anim"); // Se busca una animación en particular 
-      const action = mixer.clipAction(clip)
-      console.log(clips);
-      action.play();*/
-
-      console.log(clips);
+  
       clips.forEach(function(clip) {
         const action = mixer.clipAction(clip);
         action.play();
       });
 
     });
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+    
+      // Actualizar las animaciones (esto debe ir en el bucle de renderizado)
+      if (loadedModel) {
+        mixer.update(0.01); // Ajusta el tiempo adecuado para la velocidad de la animación
+      }
+
+      test.render(test.scene , test.camera)
+    };
+    
+    // Llamar a la función de renderizado
+    animate();
 
 
     function handleKeyDown(event) {
